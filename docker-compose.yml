@@ -5,7 +5,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        container_name: om30_app
+        container_name: om30-app
         restart: unless-stopped
         working_dir: /var/www/
         volumes:
@@ -18,7 +18,7 @@ services:
 
     nginx:
         image: nginx:alpine
-        container_name: om30_nginx
+        container_name: om30-nginx
         restart: unless-stopped
         ports:
             - "80:80"
@@ -30,7 +30,7 @@ services:
 
     db:
         image: 'postgres:latest'
-        container_name: om30_db
+        container_name: om30-db
         environment:
             PGPASSWORD: '${DB_PASSWORD:-secret}'
             POSTGRES_DB: '${DB_DATABASE}'
@@ -49,7 +49,7 @@ services:
     
     queue:
         image: especializati/laravel9-app
-        container_name: om30_queue
+        container_name: om30-queue
         restart: unless-stopped
         command: "php artisan queue:work"
         volumes:
@@ -62,7 +62,7 @@ services:
 
     redis:
         image: redis:latest
-        container_name: om30_redis
+        container_name: om30-redis
         networks:
             - om30net
 
