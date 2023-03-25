@@ -19,15 +19,15 @@ class PatientFactory extends Factory
     public function definition(): array
     {
         return [
+            'uuid'=> fake()->uuid(),
+            'name' => fake()->name(),
             'mother_name' => fake()->name('female'),
             'dob' => fake()->date('Y-m-d', $max = 'now'),
+            'email' => fake()->unique()->safeEmail(),
             'cpf' => fake()->numerify('###########'),
             'cns' => fake()->numerify('###############'),
             'complete_address' => $this->getCompleteAddress(),
-            'photo' => '/storage/app/public/users/' . md5(Str::random()) . '.png',
-            'user_id' => function() {
-                return User::factory()->create()->id;
-            }
+            'photo' => '/storage/app/public/users/' . md5(Str::random()) . '.png'
         ];
     }
 

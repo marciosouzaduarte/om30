@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+Route::post('/patients', [PatientController::class, 'store'])->name('store');
 Route::get('/patients', [PatientController::class, 'index'])->name('index');
 
 Route::get('/', function() {

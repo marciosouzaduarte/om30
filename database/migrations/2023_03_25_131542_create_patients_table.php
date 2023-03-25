@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->uuid('uuid');
+            $table->string('name', 50);
             $table->string('mother_name', 50);
             $table->date('dob');
+            $table->string('email', 50);
             $table->string('cpf', 11);
             $table->string('cns', 15);
             $table->string('complete_address', 255);
-            $table->string('photo', 150);
+            $table->string('photo', 150)->nullable();
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

@@ -2,26 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Patient extends Model
 {
     use HasFactory;
     
     protected $fillable = [
+        'uuid',
+        'name',
         'mother_name',
         'dob',
+        'email',
         'cpf',
         'cns',
         'complete_address',
         'photo',
     ];
-
-    public function user(): HasOne
-    {
-        return $this->hasOne(User::class, 'user_id', 'id');
-    }
-
 }

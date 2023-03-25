@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Patient;
+use Illuminate\Database\Eloquent\Collection;
 
 class PatientRepository
 {
@@ -13,8 +14,13 @@ class PatientRepository
         $this->entity = $patient;
     }
 
-    public function getAllPatients()
+    public function get(): Collection
     {
         return $this->entity->get();
+    }
+
+    public function store(array $data): Patient
+    {
+        return $this->entity->create($data);
     }
 }
