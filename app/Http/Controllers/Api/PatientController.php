@@ -12,9 +12,6 @@ class PatientController extends Controller
 {
     public function __construct(protected PatientService $patientService) {}
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $patients = $this->patientService->get();
@@ -22,9 +19,6 @@ class PatientController extends Controller
         return PatientResource::collection($patients);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(PatientRequest $request)
     {
         $patient = $this->patientService->store($request->validated());
@@ -32,12 +26,11 @@ class PatientController extends Controller
         return new PatientResource($patient);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show($identify)
     {
-        //
+        $patient = $this->patientService->getByUuid($identify);
+
+        return new PatientResource($patient);
     }
 
     /**

@@ -19,6 +19,11 @@ class PatientRepository
         return $this->entity->get();
     }
 
+    public function getByUuid(string $identify = null): Patient
+    {
+        return $this->entity->where('uuid', $identify)->firstOrfail();
+    }
+
     public function store(array $data): Patient
     {
         return $this->entity->create($data);

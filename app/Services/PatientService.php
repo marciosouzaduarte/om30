@@ -20,6 +20,11 @@ class PatientService
         return $this->repository->get();
     }
 
+    public function getByUuid(string $identify = null): Patient
+    {
+        return $this->repository->getByUuid($identify);
+    }
+
     public function store(array $data): Patient
     {
         return $this->repository->store($data);

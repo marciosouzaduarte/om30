@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post('/patients', [PatientController::class, 'store'])->name('store');
-Route::get('/patients', [PatientController::class, 'index'])->name('index');
+Route::get('/patients/{identify}', [PatientController::class, 'show'])->name('patient.show');
+Route::post('/patients', [PatientController::class, 'store'])->name('patient.store');
+Route::get('/patients', [PatientController::class, 'index'])->name('patient.index');
 
 Route::get('/', function() {
     return response()->json(['Teste' => 'Ok']);
