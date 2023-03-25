@@ -14,6 +14,16 @@ class PatientResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'uuid' => $this->uuid,
+            'name' => $this->name,
+            'mother_name' => $this->mother_name,
+            'dob' => $this->dob,
+            'email' => $this->email,
+            'cpf' => $this->cpf,
+            'cns' => $this->cns,
+            'complete_address' => $this->complete_address,
+            'photo' => $this->photo,
+        ];
     }
 }

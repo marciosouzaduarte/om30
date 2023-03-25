@@ -2,13 +2,13 @@
 
 namespace App\Observers;
 
-use Ramsey\Uuid\Uuid;
 use App\Models\Patient;
+use Illuminate\Support\Str;
 
 class PatientObserver
 {
     public function creating(Patient $patient): void
     {
-        $patient->uuid = Uuid::uuid4();
+        $patient->uuid = (string) Str::uuid();
     }
 }

@@ -2,8 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\User;
-use App\Models\Patient;
+use App\Models\{User, Patient};
 use App\Observers\UserObserver;
 use App\Observers\PatientObserver;
 use Illuminate\Support\Facades\Event;

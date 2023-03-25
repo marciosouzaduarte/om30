@@ -3,12 +3,12 @@
 namespace App\Observers;
 
 use App\Models\User;
-use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 
 class UserObserver
 {
     public function creating(User $user): void
     {
-        $user->uuid = Uuid::uuid4();
+        $user->uuid = (string) Str::uuid();
     }
 }
