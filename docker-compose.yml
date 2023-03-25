@@ -1,0 +1,71 @@
+version: "3.7"
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: om30_laravel
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        depends_on:
+            - redis
+            - db
+        networks:
+            - om30net
+
+    nginx:
+        image: nginx:alpine
+        container_name: om30_nginx
+        restart: unless-stopped
+        ports:
+            - "8989:80"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+        networks:
+            - om30net
+
+    db:
+        image: 'postgres:latest'
+        container_name: om30_db
+        environment:
+            PGPASSWORD: '${DB_PASSWORD:-secret}'
+            POSTGRES_DB: '${DB_DATABASE}'
+            POSTGRES_USER: '${DB_USERNAME}'
+            POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+        volumes:
+            - ./.docker/pgsql:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        networks:
+            - om30net
+        healthcheck:
+            test: ["CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}"]
+            retries: 3
+            timeout: 5s
+    
+    queue:
+        image: especializati/laravel9-app
+        container_name: om30_queue
+        restart: unless-stopped
+        command: "php artisan queue:work"
+        volumes:
+            - ./:/var/www
+        depends_on:
+            - redis
+            - app
+        networks:
+            - om30net
+
+    redis:
+        image: redis:latest
+        container_name: om30_redis
+        networks:
+            - om30net
+
+networks:
+    om30net:
+        driver: bridge
