@@ -5,7 +5,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        container_name: om30_laravel
+        container_name: om30_app
         restart: unless-stopped
         working_dir: /var/www/
         volumes:
@@ -21,7 +21,7 @@ services:
         container_name: om30_nginx
         restart: unless-stopped
         ports:
-            - "8989:80"
+            - "80:80"
         volumes:
             - ./:/var/www
             - ./docker/nginx/:/etc/nginx/conf.d/
@@ -37,7 +37,7 @@ services:
             POSTGRES_USER: '${DB_USERNAME}'
             POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
         volumes:
-            - ./.docker/pgsql:/var/lib/postgresql/data
+            - ./.docker/postgresql/data:/var/lib/postgresql/data
         ports:
             - "5432:5432"
         networks:
