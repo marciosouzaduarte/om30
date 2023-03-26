@@ -37,6 +37,17 @@ class PatientController extends Controller
         return response()->json(new PatientResource($patient));
     }
 
+    public function search(string $value): JsonResponse
+    {
+        $patient = $this->patientService->getByNameCpf($value);
+
+        if (is_null($patient)) {
+            return response()->json(['message' => 'patient not found'], HttpStatusCode::$NOT_FOUND);
+        }
+
+        return response()->json(new PatientResource($patient));
+    }
+
     public function store(PatientRequest $request): JsonResponse
     {
         $patient = $this->patientService->store($request->validated());

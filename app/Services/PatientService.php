@@ -25,6 +25,11 @@ class PatientService
         return $this->repository->getByUuid($identify);
     }
 
+    public function getByNameCpf(string $value): Patient | null
+    {
+        return $this->repository->getByNameCpf($value);
+    }
+
     public function store(array $data): Patient | null
     {
         return $this->repository->store($data);

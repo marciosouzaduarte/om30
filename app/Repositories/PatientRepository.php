@@ -33,6 +33,15 @@ class PatientRepository
         }
     }
 
+    public function getByNameCpf(string $value): Patient | null
+    {
+        try {
+            return $this->entity->where('name', $value)->orWhere('cpf', $value)->firstOrfail();
+        } catch(Throwable $th) {
+            return null;
+        }
+    }
+
     public function store(array $data): Patient | null
     {
         try {
