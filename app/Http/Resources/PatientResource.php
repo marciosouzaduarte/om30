@@ -16,6 +16,7 @@ class PatientResource extends JsonResource
                             ->where('patient_id', $this->id)
                             ->firstOrfail()
                             ->toArray();
+            $address = array_diff_key($address, array_flip(['id', 'patient_id']));
 
         } catch(Throwable $th) {
             $address = [];
@@ -32,8 +33,5 @@ class PatientResource extends JsonResource
             'photo' => $this->photo,
             'address' => $address,
         ];
-
-        
-
     }
 }

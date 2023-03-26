@@ -2,9 +2,10 @@
 
 namespace App\Repositories;
 
+use Throwable;
+use App\Models\Address;
 use App\Models\Patient;
 use Illuminate\Database\Eloquent\Collection;
-use Throwable;
 
 class PatientRepository
 {
@@ -45,7 +46,12 @@ class PatientRepository
     public function store(array $data): Patient | null
     {
         try {
-            return $this->entity->create($data);
+            $patient = $this->entity->create($data);
+            $data['patient_id'] = $patient->id;
+            $address = (new Address())->create($data);
+            
+            return $patient;
+
         } catch(Throwable $th) {
             return null;
         }
