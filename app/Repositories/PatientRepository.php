@@ -46,12 +46,7 @@ class PatientRepository
     public function store(array $data): Patient | null
     {
         try {
-            $patient = $this->entity->create($data);
-            $data['patient_id'] = $patient->id;
-            $address = (new Address())->create($data);
-            
-            return $patient;
-
+            return $this->entity->create($data);
         } catch(Throwable $th) {
             return null;
         }
@@ -61,18 +56,7 @@ class PatientRepository
     {
         try {
             $patient = $this->getByUuid($identify);
-            $patient->update($data);
-
-            $data['patient_id'] = $patient->id;
-            try {
-                $address = (new Address())->where('patient_id', $patient->id)->firstOrfail();
-                $address->update($data);
-            } catch(Throwable $thp) {
-                $address = (new Address())->create($data);
-            }
-
-            return true;
-
+            return $patient->update($data);
         } catch(Throwable $th) {
             return false;
         }
