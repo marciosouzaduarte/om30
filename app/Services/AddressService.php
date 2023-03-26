@@ -46,7 +46,7 @@ class AddressService
         return $this->addressRepository->deleteByPatient($this->getPatientId($identify));
     }
 
-    private function getPatientId(string $identify)
+    private function getPatientId(string $identify): int
     {
         $patient = $this->patientRepository->getByUuid($identify);
         return $patient->id;
