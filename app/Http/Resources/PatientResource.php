@@ -11,6 +11,20 @@ class PatientResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        return [
+            'identify' => $this->uuid,
+            'name' => $this->name,
+            'mother_name' => $this->mother_name,
+            'dob' => Carbon::make($this->dob)->format('Y-m-d'),
+            'email' => $this->email,
+            'cpf' => $this->cpf,
+            'cns' => $this->cns,
+            'photo' => $this->photo,
+            'address' => $this->getAddress($this->id),
+        ];
+    }
+
+    private function getAddress(int $id) {
         try {
             $address = $this->address
                             ->where('patient_id', $this->id)
@@ -22,16 +36,6 @@ class PatientResource extends JsonResource
             $address = [];
         }
 
-        return [
-            'identify' => $this->uuid,
-            'name' => $this->name,
-            'mother_name' => $this->mother_name,
-            'dob' => Carbon::make($this->dob)->format('Y-m-d'),
-            'email' => $this->email,
-            'cpf' => $this->cpf,
-            'cns' => $this->cns,
-            'photo' => $this->photo,
-            'address' => $address,
-        ];
+        return $address;
     }
 }

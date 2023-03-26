@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Patient;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Address extends Model
 {
@@ -18,4 +19,9 @@ class Address extends Model
         'city',
         'country',
     ];
+
+    public function patient() 
+    {
+        return $this->belongsTo(Patient::class, 'patient_id', 'id');
+    }
 }
