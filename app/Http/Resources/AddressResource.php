@@ -12,7 +12,7 @@ class AddressResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'identify' => $this->getPatientIdentify($this->patient_id),
+            'identify' => (new PatientResource($this->patient))->uuid,
             'postcode' => $this->postcode,
             'street_address' => $this->street_address,
             'building_number' => $this->building_number,
@@ -20,18 +20,5 @@ class AddressResource extends JsonResource
             'city' => $this->city,
             'country' => $this->country,
         ];
-    }
-
-    private function getPatientIdentify(int $id): string
-    {
-        try {
-            $patient = (new Patient())
-                            ->where('id', $id)
-                            ->firstOrfail();
-            return $patient->uuid;
-
-        } catch(Throwable $th) {
-            return '';
-        }
     }
 }

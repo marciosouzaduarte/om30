@@ -2,10 +2,11 @@
 
 namespace App\Http\Resources;
 
+use Throwable;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Resources\AddressResource;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Throwable;
 
 class PatientResource extends JsonResource
 {
@@ -20,22 +21,7 @@ class PatientResource extends JsonResource
             'cpf' => $this->cpf,
             'cns' => $this->cns,
             'photo' => $this->photo,
-            'address' => $this->getAddress($this->id),
+            'address' => new AddressResource($this->address),
         ];
-    }
-
-    private function getAddress(int $id) {
-        try {
-            $address = $this->address
-                            ->where('patient_id', $this->id)
-                            ->firstOrfail()
-                            ->toArray();
-            $address = array_diff_key($address, array_flip(['id', 'patient_id']));
-
-        } catch(Throwable $th) {
-            $address = [];
-        }
-
-        return $address;
     }
 }

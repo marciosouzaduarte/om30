@@ -19,25 +19,32 @@ class PatientRepository
     public function getAll(): Collection | null
     {
         try {
-            return $this->entity->get();
+            return $this->entity->with('address')->get();
         } catch(Throwable $th) {
             return null;
         }
     }
 
-    public function getByUuid(string $identify): Patient | null
+    public function getByUuid(string $identify, bool $withRelationship = true): Patient | null
     {
         try {
-            return $this->entity->where('uuid', $identify)->firstOrfail();
+            return $this->entity
+                        ->with($withRelationship ? 'address' : '')
+                        ->where('uuid', $identify)
+                        ->firstOrfail();
         } catch(Throwable $th) {
             return null;
         }
     }
 
-    public function getByNameCpf(string $value): Patient | null
+    public function getByNameCpf(string $value, bool $withRelationship = true): Patient | null
     {
         try {
-            return $this->entity->where('name', $value)->orWhere('cpf', $value)->firstOrfail();
+            return $this->entity
+                        ->with($withRelationship ? 'address' : '')
+                        ->where('name', $value)
+                        ->orWhere('cpf', $value)
+                        ->firstOrfail();
         } catch(Throwable $th) {
             return null;
         }
@@ -55,7 +62,7 @@ class PatientRepository
     public function updateByUuid(string $identify, array $data): bool
     {
         try {
-            $patient = $this->getByUuid($identify);
+            $patient = $this->getByUuid($identify, false);
             return $patient->update($data);
         } catch(Throwable $th) {
             return false;
