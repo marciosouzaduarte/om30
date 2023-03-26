@@ -2,50 +2,66 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Auxs\HttpStatusCode;
+use App\Services\PatientService;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PatientRequest;
 use App\Http\Resources\PatientResource;
-use App\Services\PatientService;
-use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
-    public function __construct(protected PatientService $patientService) {}
-
-    public function index()
+    public function __construct(protected PatientService $patientService)
     {
-        $patients = $this->patientService->get();
-
-        return PatientResource::collection($patients);
     }
 
-    public function store(PatientRequest $request)
+    public function index(): JsonResponse
     {
-        $patient = $this->patientService->store($request->validated());
+        $patients = $this->patientService->getAll();
 
-        return new PatientResource($patient);
+        if (is_null($patients)) {
+            return response()->json(['message' => 'patients not found'], HttpStatusCode::$NOT_FOUND);
+        }
+
+        return response()->json(PatientResource::collection($patients));
     }
 
-    public function show($identify)
+    public function show(string $identify): JsonResponse
     {
         $patient = $this->patientService->getByUuid($identify);
 
-        return new PatientResource($patient);
+        if (is_null($patient)) {
+            return response()->json(['message' => 'patient not found'], HttpStatusCode::$NOT_FOUND);
+        }
+
+        return response()->json(new PatientResource($patient));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function store(PatientRequest $request): JsonResponse
     {
-        //
+        $patient = $this->patientService->store($request->validated());
+        if (is_null($patient)) {
+            return response()->json(['message' => 'patient not created'], HttpStatusCode::$BAD_REQUEST);
+        }
+
+        return response()->json(new PatientResource($patient), HttpStatusCode::$CREATED);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function update(PatientRequest $request, string $identify): JsonResponse
     {
-        //
+        if (!$this->patientService->updateByUuid($identify, $request->validated())) {
+            return response()->json(['message' => 'patient not updated'], HttpStatusCode::$NOT_FOUND);
+        }
+
+        return response()->json([], HttpStatusCode::$NO_CONTENT);
+    }
+
+    public function destroy(string $identify): JsonResponse
+    {
+        if (!$this->patientService->deleteByUuid($identify)) {
+            return response()->json(['message' => 'patient not deleted'], HttpStatusCode::$NOT_FOUND);
+        }
+
+        return response()->json([], HttpStatusCode::$NO_CONTENT);
     }
 }

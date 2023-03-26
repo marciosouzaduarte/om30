@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Patient;
 use Illuminate\Database\Eloquent\Collection;
+use Throwable;
 
 class PatientRepository
 {
@@ -14,18 +15,49 @@ class PatientRepository
         $this->entity = $patient;
     }
 
-    public function get(): Collection
+    public function getAll(): Collection | null
     {
-        return $this->entity->get();
+        try {
+            return $this->entity->get();
+        } catch(Throwable $th) {
+            return null;
+        }
     }
 
-    public function getByUuid(string $identify = null): Patient
+    public function getByUuid(string $identify): Patient | null
     {
-        return $this->entity->where('uuid', $identify)->firstOrfail();
+        try {
+            return $this->entity->where('uuid', $identify)->firstOrfail();
+        } catch(Throwable $th) {
+            return null;
+        }
     }
 
-    public function store(array $data): Patient
+    public function store(array $data): Patient | null
     {
-        return $this->entity->create($data);
+        try {
+            return $this->entity->create($data);
+        } catch(Throwable $th) {
+            return null;
+        }
+    }
+
+    public function updateByUuid(string $identify, array $data): bool
+    {
+        try {
+            $patient = $this->getByUuid($identify);
+            return $patient->update($data);
+        } catch(Throwable $th) {
+            return false;
+        }
+    }
+
+    public function deleteByUuid(string $identify): bool
+    {
+        try {
+            return $this->entity->where('uuid', $identify)->delete();
+        } catch(Throwable $th) {
+            return false;
+        }
     }
 }

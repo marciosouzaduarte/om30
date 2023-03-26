@@ -15,18 +15,28 @@ class PatientService
         $this->repository = $patientRepository;
     }
 
-    public function get(): Collection
+    public function getAll(): Collection | null
     {
-        return $this->repository->get();
+        return $this->repository->getAll();
     }
 
-    public function getByUuid(string $identify = null): Patient
+    public function getByUuid(string $identify): Patient | null
     {
         return $this->repository->getByUuid($identify);
     }
 
-    public function store(array $data): Patient
+    public function store(array $data): Patient | null
     {
         return $this->repository->store($data);
+    }
+
+    public function updateByUuid(string $identify, array $data): bool
+    {
+        return $this->repository->updateByUuid($identify, $data);
+    }
+
+    public function deleteByUuid(string $identify): bool
+    {
+        return $this->repository->deleteByUuid($identify);
     }
 }
