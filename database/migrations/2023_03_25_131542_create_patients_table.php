@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('email', 50);
             $table->string('cpf', 11);
             $table->string('cns', 15);
-            $table->string('complete_address', 255);
             $table->string('photo', 150)->nullable();
             $table->timestamps();
         });

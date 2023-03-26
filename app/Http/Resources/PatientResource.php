@@ -5,11 +5,22 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Throwable;
 
 class PatientResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        try {
+            $address = $this->address
+                            ->where('patient_id', $this->id)
+                            ->firstOrfail()
+                            ->toArray();
+
+        } catch(Throwable $th) {
+            $address = [];
+        }
+
         return [
             'identify' => $this->uuid,
             'name' => $this->name,
@@ -18,8 +29,11 @@ class PatientResource extends JsonResource
             'email' => $this->email,
             'cpf' => $this->cpf,
             'cns' => $this->cns,
-            'complete_address' => $this->complete_address,
             'photo' => $this->photo,
+            'address' => $address,
         ];
+
+        
+
     }
 }

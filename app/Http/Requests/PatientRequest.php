@@ -28,7 +28,12 @@ class PatientRequest extends FormRequest
             'email' => ['required', 'email'],
             'cpf' => ['required', 'integer'],
             'cns' => ['required', 'integer'],
-            'complete_address' => ['required', 'min:10', 'max:255']
+            'postcode' => ['required'],
+            'street_address' => ['required', 'min:3', 'max:100'],
+            'building_number' => ['required', 'integer'],
+            'street_name' => ['required', 'min:3', 'max:100'],
+            'city' => ['required', 'min:3', 'max:100'],
+            'country' => ['required', 'min:3', 'max:100'],
         ];
     }
 }

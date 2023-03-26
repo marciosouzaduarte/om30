@@ -26,21 +26,7 @@ class PatientFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'cpf' => fake()->numerify('###########'),
             'cns' => fake()->numerify('###############'),
-            'complete_address' => $this->getCompleteAddress(),
             'photo' => '/storage/app/public/users/' . md5(Str::random()) . '.png'
         ];
-    }
-
-    private function getCompleteAddress(): string
-    {
-        return implode(", ", [
-            fake()->postcode(),
-            fake()->streetAddress(),
-            fake()->buildingNumber(),
-            fake()->streetName(),
-            fake()->postcode(),
-            fake()->city(),
-            fake()->country(),
-        ]);
     }
 }

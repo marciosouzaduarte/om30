@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Ramsey\Uuid\Uuid;
+use App\Models\Address;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Patient extends Model
@@ -22,4 +21,9 @@ class Patient extends Model
         'complete_address',
         'photo',
     ];
+
+    public function address() 
+    {
+        return $this->hasOne(Address::class, 'patient_id', 'id');
+    }
 }
