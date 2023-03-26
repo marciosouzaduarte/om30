@@ -61,7 +61,18 @@ class PatientRepository
     {
         try {
             $patient = $this->getByUuid($identify);
-            return $patient->update($data);
+            $patient->update($data);
+
+            $data['patient_id'] = $patient->id;
+            try {
+                $address = (new Address())->where('patient_id', $patient->id)->firstOrfail();
+                $address->update($data);
+            } catch(Throwable $thp) {
+                $address = (new Address())->create($data);
+            }
+
+            return true;
+
         } catch(Throwable $th) {
             return false;
         }
