@@ -2,13 +2,19 @@
 
 namespace App\Services;
 
+use App\Models\Address;
 use App\Models\Patient;
+use App\Services\AddressService;
+use App\Repositories\AddressRepository;
 use App\Repositories\PatientRepository;
 use Illuminate\Database\Eloquent\Collection;
+use Throwable;
 
 class PatientService
 {
-    public function __construct(protected PatientRepository $patientRepository)
+    public function __construct(
+        protected PatientRepository $patientRepository,
+        protected AddressRepository $addressRepository)
     {
     }
 
@@ -39,6 +45,7 @@ class PatientService
 
     public function deleteByUuid(string $identify): bool
     {
+        $this->addressRepository->deleteByPatient($this->getByUuid($identify)->id);
         return $this->patientRepository->deleteByUuid($identify);
     }
 }
