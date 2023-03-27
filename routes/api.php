@@ -19,6 +19,7 @@ Route::post('/patient/{identify}/address', [AddressController::class, 'store'])-
 
 // Patients
 Route::get('/patient/list', [PatientController::class, 'index'])->name('patient.index');
+Route::get('/patient/list/{page}', [PatientController::class, 'index'])->name('patient.index');
 Route::get('/patient/search/{value}', [PatientController::class, 'search'])->name('patient.search');
 Route::put('/patient/{identify}', [PatientController::class, 'update'])->name('patient.update');
 Route::delete('/patient/{identify}', [PatientController::class, 'destroy'])->name('patient.destroy');

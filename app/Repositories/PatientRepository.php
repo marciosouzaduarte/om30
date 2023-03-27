@@ -3,9 +3,10 @@
 namespace App\Repositories;
 
 use Throwable;
-use App\Models\Address;
 use App\Models\Patient;
+use App\Http\Auxs\Pagination;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class PatientRepository
 {
@@ -16,10 +17,13 @@ class PatientRepository
         $this->entity = $patient;
     }
 
-    public function getAll(): Collection | null
+    public function getAll(int $currentPage = 1, int $total = 10): Collection | null
     {
         try {
-            return $this->entity->with('address')->get();
+            $key = 'patients_' . $currentPage;
+            return Cache::remember($key, Pagination::$EXPIRES, function() use ($currentPage, $total) {
+                return $this->entity->limit($total)->offset($currentPage)->get();
+            });
         } catch(Throwable $th) {
             return null;
         }

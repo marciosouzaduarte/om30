@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Auxs\HttpStatusCode;
 use App\Services\PatientService;
+use App\Http\Auxs\HttpStatusCode;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PatientRequest;
@@ -15,9 +15,9 @@ class PatientController extends Controller
     {
     }
 
-    public function index(): JsonResponse
+    public function index(int $page = 1): JsonResponse
     {
-        $patients = $this->patientService->getAll();
+        $patients = $this->patientService->getAll($page);
 
         if (is_null($patients)) {
             return response()->json(['message' => 'patients not found'], HttpStatusCode::$NOT_FOUND);

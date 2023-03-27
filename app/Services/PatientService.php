@@ -2,13 +2,12 @@
 
 namespace App\Services;
 
+use Throwable;
 use App\Models\Address;
 use App\Models\Patient;
-use App\Services\AddressService;
 use App\Repositories\AddressRepository;
 use App\Repositories\PatientRepository;
 use Illuminate\Database\Eloquent\Collection;
-use Throwable;
 
 class PatientService
 {
@@ -18,9 +17,9 @@ class PatientService
     {
     }
 
-    public function getAll(): Collection | null
+    public function getAll(int $page = 1, int $total = 10): Collection | null
     {
-        return $this->patientRepository->getAll();
+        return $this->patientRepository->getAll($page, $total);
     }
 
     public function getByUuid(string $identify): Patient | null
