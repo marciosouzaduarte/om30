@@ -24,7 +24,7 @@ class AddressRequest extends FormRequest
         return [
             'postcode' => ['nullable'],
             'street_address' => ['nullable', 'min:3', 'max:100'],
-            'building_number' => ['nullable', 'integer'],
+            'building_number' => ['nullable', 'numeric'],
             'street_name' => ['nullable', 'min:3', 'max:100'],
             'city' => ['nullable', 'min:3', 'max:100'],
             'country' => ['nullable', 'min:3', 'max:100'],

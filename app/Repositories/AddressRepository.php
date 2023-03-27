@@ -57,6 +57,7 @@ class AddressRepository
         try {
             return $this->entity->create($data);
         } catch (Throwable $th) {
+            dd($th);
             return null;
         }
     }
