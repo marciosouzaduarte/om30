@@ -57,6 +57,7 @@ class PatientRepository
     public function store(array $data): Patient | null
     {
         try {
+            Cache::flush();
             return $this->entity->create($data);
         } catch(Throwable $th) {
             return null;
@@ -66,6 +67,7 @@ class PatientRepository
     public function updateByUuid(string $identify, array $data): bool
     {
         try {
+            Cache::flush();
             $patient = $this->getByUuid($identify);
             return $patient->update($data);
         } catch(Throwable $th) {
@@ -76,6 +78,7 @@ class PatientRepository
     public function deleteByUuid(string $identify): bool
     {
         try {
+            Cache::flush();
             return $this->entity->where('uuid', $identify)->delete();
         } catch(Throwable $th) {
             return false;
