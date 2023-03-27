@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use Throwable;
 use App\Models\Address;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class AddressRepository
 {
@@ -76,5 +78,14 @@ class AddressRepository
         } catch (Throwable $th) {
             return false;
         }
+    }
+
+    public function viacep(string $value): mixed
+    {
+        $key = 'viacep_' . $value;
+        return Cache::remember($key, 60, function() use ($value) {
+            $data = Http::get("http://viacep.com.br/ws/{$value}/json");
+            return $data->json();
+        });
     }
 }

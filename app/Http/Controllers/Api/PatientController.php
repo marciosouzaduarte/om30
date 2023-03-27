@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Patient;
 use App\Services\PatientService;
 use App\Http\Auxs\HttpStatusCode;
 use Illuminate\Http\JsonResponse;
@@ -74,5 +75,12 @@ class PatientController extends Controller
         }
 
         return response()->json([], HttpStatusCode::$NO_CONTENT);
+    }
+
+    public function export(string $identify = null)
+    {
+        $export = $this->patientService->export($identify);
+
+        return response()->stream($export['callback'], 200, $export['headers']);
     }
 }

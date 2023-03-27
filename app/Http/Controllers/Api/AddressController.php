@@ -8,6 +8,8 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressRequest;
 use App\Http\Resources\AddressResource;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 
 class AddressController extends Controller
 {
@@ -68,5 +70,10 @@ class AddressController extends Controller
         }
 
         return response()->json([], HttpStatusCode::$NO_CONTENT);
+    }
+
+    public function viacep(string $value): JsonResponse
+    {
+        return response()->json($this->addressService->viacep($value));
     }
 }

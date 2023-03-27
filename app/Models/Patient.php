@@ -18,7 +18,6 @@ class Patient extends Model
         'email',
         'cpf',
         'cns',
-        'complete_address',
         'photo',
     ];
 

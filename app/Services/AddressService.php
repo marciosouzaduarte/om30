@@ -46,6 +46,11 @@ class AddressService
         return $this->addressRepository->deleteByPatient($this->getPatientId($identify));
     }
 
+    public function viacep(string $value): mixed
+    {
+        return $this->addressRepository->viacep($value);
+    }
+
     private function getPatientId(string $identify): int
     {
         $patient = $this->patientRepository->getByUuid($identify);

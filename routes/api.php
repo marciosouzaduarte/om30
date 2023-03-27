@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 // Addresses
 Route::get('/patient/address/list', [AddressController::class, 'index'])->name('address.index');
+Route::get('/patient/address/viacep/{value}', [AddressController::class, 'viacep'])->name('address.viacep');
 Route::get('/patient/address/search/{value}', [AddressController::class, 'search'])->name('address.search');
 Route::put('/patient/{identify}/address', [AddressController::class, 'update'])->name('address.update');
 Route::delete('/patient/{identify}/address', [AddressController::class, 'destroy'])->name('address.destroy');
@@ -18,6 +19,8 @@ Route::post('/patient/{identify}/address', [AddressController::class, 'store'])-
 
 // Patients
 Route::get('/patient/list', [PatientController::class, 'index'])->name('patient.index');
+Route::get('/patient/export', [PatientController::class, 'export'])->name('patient.export');
+Route::get('/patient/{identify}/export', [PatientController::class, 'export'])->name('patient.export');
 Route::get('/patient/list/{page}', [PatientController::class, 'index'])->name('patient.index');
 Route::get('/patient/search/{value}', [PatientController::class, 'search'])->name('patient.search');
 Route::put('/patient/{identify}', [PatientController::class, 'update'])->name('patient.update');

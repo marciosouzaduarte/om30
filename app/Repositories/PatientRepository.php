@@ -29,6 +29,30 @@ class PatientRepository
         }
     }
 
+    public function getAllClear(): Collection | null
+    {
+        try {
+            $key = 'patients_all';
+            return Cache::remember($key, Paginate::$CACHE_EXPIRE_PER_PAGE, function() {
+                return $this->entity->with('address')->get();
+            });
+        } catch(Throwable $th) {
+            return null;
+        }
+    }
+
+    public function getByUuidCollection(string $identify): Collection | null
+    {
+        try {
+            return $this->entity
+                        ->with('address')
+                        ->where('uuid', $identify)
+                        ->get();
+        } catch(Throwable $th) {
+            return null;
+        }
+    }
+
     public function getByUuid(string $identify): Patient | null
     {
         try {
