@@ -29,11 +29,11 @@ class PatientRepository
         }
     }
 
-    public function getByUuid(string $identify, bool $withRelationship = true): Patient | null
+    public function getByUuid(string $identify): Patient | null
     {
         try {
             return $this->entity
-                        ->with($withRelationship ? 'address' : '')
+                        ->with('address')
                         ->where('uuid', $identify)
                         ->firstOrfail();
         } catch(Throwable $th) {
@@ -41,11 +41,11 @@ class PatientRepository
         }
     }
 
-    public function getByNameCpf(string $value, bool $withRelationship = true): Patient | null
+    public function getByNameCpf(string $value): Patient | null
     {
         try {
             return $this->entity
-                        ->with($withRelationship ? 'address' : '')
+                        ->with('address')
                         ->where('name', $value)
                         ->orWhere('cpf', $value)
                         ->firstOrfail();
@@ -66,7 +66,7 @@ class PatientRepository
     public function updateByUuid(string $identify, array $data): bool
     {
         try {
-            $patient = $this->getByUuid($identify, false);
+            $patient = $this->getByUuid($identify);
             return $patient->update($data);
         } catch(Throwable $th) {
             return false;
