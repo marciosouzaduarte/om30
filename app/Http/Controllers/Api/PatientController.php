@@ -8,6 +8,7 @@ use App\Http\Auxs\HttpStatusCode;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PatientRequest;
+use App\Http\Resources\PatientCollection;
 use App\Http\Resources\PatientResource;
 
 class PatientController extends Controller
@@ -24,7 +25,7 @@ class PatientController extends Controller
             return response()->json(['message' => 'patients not found'], HttpStatusCode::$NOT_FOUND);
         }
 
-        return response()->json(PatientResource::collection($patients));
+        return response()->json(new PatientCollection($patients));
     }
 
     public function show(string $identify): JsonResponse

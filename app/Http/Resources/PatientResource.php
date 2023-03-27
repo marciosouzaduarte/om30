@@ -13,15 +13,17 @@ class PatientResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'identify' => $this->uuid,
-            'name' => $this->name,
-            'mother_name' => $this->mother_name,
-            'dob' => Carbon::make($this->dob)->format('Y-m-d'),
-            'email' => $this->email,
-            'cpf' => $this->cpf,
-            'cns' => $this->cns,
-            'photo' => $this->photo,
-            'address' => new AddressResource($this->address),
+            'data' => [
+                'identify' => $this->uuid,
+                'name' => $this->name,
+                'mother_name' => $this->mother_name,
+                'dob' => Carbon::make($this->dob)->format('Y-m-d'),
+                'email' => $this->email,
+                'cpf' => $this->cpf,
+                'cns' => $this->cns,
+                'photo' => $this->photo,
+                'address' => new AddressResource($this->address),
+            ]
         ];
     }
 }
