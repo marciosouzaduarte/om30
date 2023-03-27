@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use Throwable;
-use App\Models\Address;
 use App\Models\Patient;
 use App\Repositories\AddressRepository;
 use App\Repositories\PatientRepository;

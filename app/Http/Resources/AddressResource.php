@@ -2,9 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Patient;
 use Illuminate\Http\Request;
-use PHPUnit\Event\Code\Throwable;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AddressResource extends JsonResource

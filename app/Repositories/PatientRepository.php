@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use Throwable;
 use App\Models\Patient;
-use App\Http\Auxs\Pagination;
+use App\Http\Auxs\Paginate;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 
@@ -17,12 +17,12 @@ class PatientRepository
         $this->entity = $patient;
     }
 
-    public function getAll(int $currentPage = 1, int $total = 10): Collection | null
+    public function getAll(int $page = 1): Collection | null
     {
         try {
-            $key = 'patients_' . $currentPage;
-            return Cache::remember($key, Pagination::$EXPIRES, function() use ($currentPage, $total) {
-                return $this->entity->limit($total)->offset($currentPage)->get();
+            $key = 'patients_' . $page;
+            return Cache::remember($key, Paginate::$CACHE_EXPIRE_PER_PAGE, function() use ($page) {
+                return $this->entity->limit(Paginate::$TOTAL_PER_PAGE)->offset($page)->get();
             });
         } catch(Throwable $th) {
             return null;
