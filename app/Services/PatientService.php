@@ -53,7 +53,7 @@ class PatientService
         if(! empty($identify)) {
             $patients = $this->patientRepository->getByUuidCollection($identify);
         } else {
-            $patients = $this->patientRepository->getAllClear();
+            $patients = $this->patientRepository->getAllNoPage();
         }
         
         $headers = array(

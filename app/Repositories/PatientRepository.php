@@ -29,7 +29,7 @@ class PatientRepository
         }
     }
 
-    public function getAllClear(): Collection | null
+    public function getAllNoPage(): Collection | null
     {
         try {
             $key = 'patients_all';
