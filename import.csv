@@ -1,0 +1,10 @@
+git clone https://github.com/marciosouzaduarte/om30.git
+cd om30/
+cp .env.example .env
+docker-compose up -d
+docker exec -it om30-app bash
+composer install
+php artisan migrate
+php artisan db:seed
+mkdir tests/Unit
+
