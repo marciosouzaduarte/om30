@@ -22,18 +22,18 @@ class PatientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'min:3', 'max:50'],
-            'mother_name' => ['required', 'min:3', 'max:50'],
-            'dob' => ['required'],
-            'email' => ['required', 'email'],
-            'cpf' => ['required', 'integer'],
-            'cns' => ['required', 'integer'],
-            'postcode' => ['required'],
-            'street_address' => ['required', 'min:3', 'max:100'],
-            'building_number' => ['required', 'integer'],
-            'street_name' => ['required', 'min:3', 'max:100'],
-            'city' => ['required', 'min:3', 'max:100'],
-            'country' => ['required', 'min:3', 'max:100'],
+            'name' => ['nullable', 'min:3', 'max:50'],
+            'mother_name' => ['nullable', 'min:3', 'max:50'],
+            'dob' => ['nullable'],
+            'email' => ['nullable', 'email'],
+            'cpf' => ['nullable', 'integer'],
+            'cns' => ['nullable', 'integer'],
+            'postcode' => [''],
+            'street_address' => ['min:3', 'max:100'],
+            'building_number' => ['integer'],
+            'street_name' => ['min:3', 'max:100'],
+            'city' => ['min:3', 'max:100'],
+            'country' => ['min:3', 'max:100'],
         ];
     }
 }

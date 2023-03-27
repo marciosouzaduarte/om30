@@ -22,12 +22,12 @@ class AddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'postcode' => ['required'],
-            'street_address' => ['required', 'min:3', 'max:100'],
-            'building_number' => ['required', 'integer'],
-            'street_name' => ['required', 'min:3', 'max:100'],
-            'city' => ['required', 'min:3', 'max:100'],
-            'country' => ['required', 'min:3', 'max:100'],
+            'postcode' => ['nullable'],
+            'street_address' => ['nullable', 'min:3', 'max:100'],
+            'building_number' => ['nullable', 'integer'],
+            'street_name' => ['nullable', 'min:3', 'max:100'],
+            'city' => ['nullable', 'min:3', 'max:100'],
+            'country' => ['nullable', 'min:3', 'max:100'],
         ];
     }
 }
