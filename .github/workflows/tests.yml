@@ -42,6 +42,9 @@ jobs:
 
       - name: Generate app key
         run: php artisan key:generate
+        
+      - name: Create folder tests/Unit
+        run: mkdir tests/Unit
 
       - name: Execute tests
         run: vendor/bin/phpunit
