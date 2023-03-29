@@ -4,7 +4,7 @@ cp .env.example .env
 docker-compose up -d
 docker exec -it om30-app bash
 composer install
+php artisan key:generate
 php artisan migrate
 php artisan db:seed
 mkdir tests/Unit
-
